@@ -143,7 +143,11 @@ export function HeroSection() {
           </span>{" "}
           | Previously at{" "}
           <span style={{ color: "var(--color-on-surface)", fontWeight: 500 }}>
-            Prodevans Technologies
+            Prodevans
+          </span>
+          {" "}&amp;{" "}
+          <span style={{ color: "var(--color-on-surface)", fontWeight: 500 }}>
+            ModelX AI
           </span>
         </p>
 

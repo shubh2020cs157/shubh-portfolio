@@ -13,6 +13,33 @@ export interface ExperienceEntry {
 
 export const experience: ExperienceEntry[] = [
   {
+    id: "modelxai",
+    role: "Freelance Software Engineer",
+    company: "ModelX AI",
+    type: "Freelance",
+    location: "Remote (US-based startup)",
+    startDate: "Sep 2024",
+    endDate: "Nov 2024",
+    isCurrent: false,
+    highlights: [
+      "Built core frontend features for an enterprise AI agent platform used by multi-tenant organisations to build, deploy, and monitor production AI agents — visual no-code flow builder (React Flow canvas), multi-provider AI gateway, knowledge base management, and real-time observability dashboard.",
+      "Developed the CopilotKit-powered cloud infrastructure management dashboard — natural language IaC generation, versioned Terraform/YAML blueprint editor (Ace Editor), and multi-cloud service catalog across AWS, Azure, and GCP, enabling teams to provision infrastructure without deep DevOps expertise.",
+      "Implemented multi-locale internationalisation (next-intl) across the full platform with RTL layout support and locale-aware routing — directly expanding the product's addressable market to non-English enterprise customers.",
+      "Collaborated asynchronously with a US-based founding team, shipping reviewed PRs on tight sprint cycles and contributing to frontend component architecture decisions for a production SaaS product.",
+    ],
+    techStack: [
+      "Next.js",
+      "TypeScript",
+      "React Flow",
+      "MUI",
+      "Monaco Editor",
+      "Zustand",
+      "next-auth",
+      "next-intl",
+      "Docker",
+    ],
+  },
+  {
     id: "microsoft",
     role: "Software Engineer",
     company: "Microsoft",
