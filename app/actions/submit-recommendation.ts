@@ -30,6 +30,7 @@ export async function submitRecommendation(
     role: formData.get("role"),
     company: formData.get("company") ?? "",
     relationship: formData.get("relationship"),
+    relationshipOther: formData.get("relationshipOther") ?? "",
     linkedin: formData.get("linkedin") ?? "",
     rating: formData.get("rating"),
     message: formData.get("message"),
@@ -76,14 +77,17 @@ export async function submitRecommendation(
 
   const id = randomUUID();
   const createdAt = Date.now();
-  const { name, role, company, relationship, message, linkedin, rating } =
+  const { name, role, company, relationship, relationshipOther, message, linkedin, rating } =
     parsed.data;
+
+  const finalRelationship =
+    relationship === "Other" && relationshipOther ? relationshipOther : relationship;
 
   await r.hset(KEYS.review(id), {
     name,
     role,
     company: company ?? "",
-    relationship,
+    relationship: finalRelationship,
     message,
     linkedin: linkedin ?? "",
     rating: String(rating),
@@ -99,7 +103,7 @@ export async function submitRecommendation(
       name,
       role,
       company: company ?? "",
-      relationship,
+      relationship: finalRelationship,
       rating,
       message,
     });

@@ -3,7 +3,7 @@
 import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn, signOut } from "next-auth/react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Send, AlertCircle, Loader2, ChevronDown, ShieldCheck, ShieldOff } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
@@ -147,6 +147,8 @@ export function RecommendForm({ googleUser }: RecommendFormProps) {
     mode: "onBlur",
     defaultValues: { rating: 5, name: googleUser?.name ?? "" },
   });
+
+  const relationshipValue = useWatch({ control, name: "relationship" });
 
   useEffect(() => {
     if (state.status === "ok") {
@@ -320,6 +322,22 @@ export function RecommendForm({ googleUser }: RecommendFormProps) {
         {(errors.relationship?.message ?? state.errors?.relationship?.[0]) && (
           <p className="text-xs" style={{ color: "var(--color-error)" }}>
             {errors.relationship?.message ?? state.errors?.relationship?.[0]}
+          </p>
+        )}
+        {relationshipValue === "Other" && (
+          <input
+            id="relationshipOther"
+            type="text"
+            placeholder="Describe how you know Shubh..."
+            autoFocus
+            className={`${inputBase} mt-2`}
+            style={{ color: "var(--color-on-surface)" }}
+            {...register("relationshipOther")}
+          />
+        )}
+        {(errors.relationshipOther?.message ?? state.errors?.relationshipOther?.[0]) && (
+          <p className="text-xs" style={{ color: "var(--color-error)" }}>
+            {errors.relationshipOther?.message ?? state.errors?.relationshipOther?.[0]}
           </p>
         )}
       </div>
