@@ -34,13 +34,19 @@ export const recommendationSchema = z.object({
   relationship: z.enum(RELATIONSHIPS, {
     message: "Please select how you know Shubh",
   }),
-  linkedin: z
-    .string()
-    .trim()
-    .url("Please enter a valid URL")
-    .max(200)
-    .optional()
-    .or(z.literal("")),
+  linkedin: z.preprocess(
+    (v) => {
+      if (typeof v !== "string" || v.trim() === "") return "";
+      const t = v.trim();
+      return t.startsWith("http://") || t.startsWith("https://") ? t : `https://${t}`;
+    },
+    z
+      .string()
+      .url("Please enter a valid LinkedIn URL (e.g. linkedin.com/in/yourname)")
+      .max(200)
+      .optional()
+      .or(z.literal(""))
+  ),
   rating: z.coerce
     .number()
     .int("Rating must be a whole number")

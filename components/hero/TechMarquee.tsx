@@ -5,7 +5,7 @@ const techs = [
   "LangChain", "LangGraph", "OpenAI", "AWS", "Kafka",
   "Redis", "Docker", "Kubernetes", "PostgreSQL", "MongoDB",
   "Spring Boot", "NestJS", "GraphQL", "Terraform", "Azure",
-  "GitHub Actions", "NestJS", "TailwindCSS",
+  "GitHub Actions", "TailwindCSS",
 ];
 
 export function TechMarquee() {

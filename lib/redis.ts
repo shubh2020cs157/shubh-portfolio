@@ -90,5 +90,6 @@ function normalizeReview(id: string, raw: Record<string, string>): Review {
     status: (raw.status as ReviewStatus) ?? "pending",
     createdAt: Number(raw.createdAt ?? 0),
     approvedAt: raw.approvedAt ? Number(raw.approvedAt) : undefined,
+    googleVerified: raw.googleVerified === "true",
   };
 }

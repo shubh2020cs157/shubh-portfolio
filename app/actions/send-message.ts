@@ -37,6 +37,9 @@ export async function sendMessage(
 
   const { name, email, message } = parsed.data;
 
+  const esc = (s: string) =>
+    s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     console.error("[send-message] RESEND_API_KEY is not set");
@@ -62,9 +65,9 @@ export async function sendMessage(
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #00e5ff;">New Portfolio Message</h2>
-        <p><strong>From:</strong> ${name} &lt;${email}&gt;</p>
+        <p><strong>From:</strong> ${esc(name)} &lt;${esc(email)}&gt;</p>
         <hr style="border-color: #3b494c;" />
-        <p style="white-space: pre-wrap;">${message}</p>
+        <p style="white-space: pre-wrap;">${esc(message)}</p>
       </div>
     `,
   });

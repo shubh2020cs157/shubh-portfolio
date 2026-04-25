@@ -1,7 +1,6 @@
 import { Mail, ArrowRight } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/BrandIcons";
 import { GradientButton } from "@/components/ui/GradientButton";
-import { ViewsCounter } from "@/components/layout/ViewsCounter";
 import { profile } from "@/lib/content/profile";
 
 const badges = [
@@ -113,12 +112,9 @@ export function SiteFooter() {
           </p>
 
           {/* Copyright + views */}
-          <div className="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-4">
-            <p className="text-sm" style={{ color: "var(--color-outline)" }}>
-              © {year} Shubh Kamal Sharma · Bengaluru, India
-            </p>
-            <ViewsCounter />
-          </div>
+          <p className="text-sm" style={{ color: "var(--color-outline)" }}>
+            © {year} Shubh Kamal Sharma · Bengaluru, India
+          </p>
 
           {/* Social icons */}
           <div className="flex items-center gap-3">

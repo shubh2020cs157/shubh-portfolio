@@ -12,4 +12,5 @@ export interface Review {
   status: ReviewStatus;
   createdAt: number;
   approvedAt?: number;
+  googleVerified?: boolean;
 }

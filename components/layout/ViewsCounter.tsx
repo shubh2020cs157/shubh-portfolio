@@ -18,12 +18,13 @@ export function ViewsCounter() {
     fetch("/api/views", { method: "POST", cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
       .then((data: { count?: number } | null) => {
-        if (!cancelled && data && typeof data.count === "number") {
-          setCount(data.count);
+        if (!cancelled) {
+          const n = typeof data?.count === "number" ? data.count : 0;
+          setCount(n);
         }
       })
       .catch(() => {
-        // Silent — don't surface analytics noise to the user.
+        if (!cancelled) setCount(0);
       });
 
     return () => {
@@ -35,9 +36,9 @@ export function ViewsCounter() {
 
   return (
     <span
-      className="inline-flex items-center gap-1.5 text-xs font-mono"
+      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono ghost-border"
       style={{ color: "var(--color-outline)" }}
-      aria-label={`${count} total views`}
+      aria-label={`${count.toLocaleString()} total views`}
       title={`${count.toLocaleString()} total views`}
     >
       <Eye size={12} aria-hidden="true" />

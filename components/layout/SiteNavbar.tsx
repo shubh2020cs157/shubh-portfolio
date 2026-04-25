@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Menu, X, FileText, Sun, Moon } from "lucide-react";
+import { ViewsCounter } from "@/components/layout/ViewsCounter";
 import { cn } from "@/lib/utils/cn";
 import { GradientButton } from "@/components/ui/GradientButton";
 import { useTheme } from "@/components/providers/ThemeProvider";
@@ -24,30 +25,42 @@ function scrollToSection(id: string) {
 
 export function SiteNavbar() {
   const { theme, toggleTheme, mounted } = useTheme();
-  const [active, setActive] = useState("about");
+  const [active, setActive] = useState("");
+  const activeRef = useRef("__init__"); // sentinel ensures first updateActive always runs
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    const NAVBAR_HEIGHT = 80;
 
-    const observers: IntersectionObserver[] = [];
-    navLinks.forEach(({ id }) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      const obs = new IntersectionObserver(
-        ([entry]) => { if (entry.isIntersecting) setActive(id); },
-        { threshold: 0.3, rootMargin: "-64px 0px 0px 0px" }
-      );
-      obs.observe(el);
-      observers.push(obs);
-    });
+    const updateActive = () => {
+      setScrolled(window.scrollY > 20);
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      observers.forEach((o) => o.disconnect());
+      // Find which section's top is closest to (but not past) navbar bottom
+      const trigger = NAVBAR_HEIGHT + 40; // px from top of viewport
+      let current = "";
+      for (const { id } of navLinks) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const top = el.getBoundingClientRect().top;
+        if (top <= trigger) current = id;
+      }
+
+      if (activeRef.current !== current) {
+        activeRef.current = current;
+        setActive(current);
+        // Update URL hash without adding history entry
+        window.history.replaceState(
+          null,
+          "",
+          current ? `#${current}` : window.location.pathname
+        );
+      }
     };
+
+    updateActive();
+    window.addEventListener("scroll", updateActive, { passive: true });
+    return () => window.removeEventListener("scroll", updateActive);
   }, []);
 
   useEffect(() => {
@@ -73,7 +86,7 @@ export function SiteNavbar() {
         <nav className="max-w-7xl mx-auto px-6 flex items-center justify-between" aria-label="Main navigation">
           {/* Logo */}
           <button
-            onClick={(e) => handleNavClick(e, "about")}
+            onClick={() => { window.scrollTo({ top: 0, behavior: "smooth" }); window.history.replaceState(null, "", window.location.pathname); setMenuOpen(false); }}
             className="font-bold text-lg tracking-tight transition-colors hover:text-primary-container focus-visible:outline-none"
             style={{ fontFamily: "var(--font-display)", color: "var(--color-on-surface)" }}
             aria-label="Shubh Kamal Sharma — go to top"
@@ -104,6 +117,7 @@ export function SiteNavbar() {
 
           {/* Desktop right: Resume + Theme toggle + Hire Me */}
           <div className="hidden lg:flex items-center gap-3">
+            <ViewsCounter />
             <a
               href="/resume.pdf"
               target="_blank"

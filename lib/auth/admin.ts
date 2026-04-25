@@ -1,18 +1,18 @@
-export const ADMIN_COOKIE_NAME = "admin_session";
+import { createHash, timingSafeEqual } from "crypto";
 
-function safeEqual(a: string, b: string): boolean {
-  if (a.length !== b.length) return false;
-  let result = 0;
-  for (let i = 0; i < a.length; i++) {
-    result |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  }
-  return result === 0;
-}
+export const ADMIN_COOKIE_NAME = "admin_session";
 
 export function verifyAdminToken(token: string | undefined | null): boolean {
   const expected = process.env.ADMIN_TOKEN;
   if (!expected || !token) return false;
-  return safeEqual(token, expected);
+  try {
+    // Hash both to same-length buffers so timingSafeEqual never leaks token length
+    const a = createHash("sha256").update(token).digest();
+    const b = createHash("sha256").update(expected).digest();
+    return timingSafeEqual(a, b);
+  } catch {
+    return false;
+  }
 }
 
 export async function isAuthenticatedAdmin(): Promise<boolean> {

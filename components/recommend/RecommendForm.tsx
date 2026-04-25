@@ -2,9 +2,11 @@
 
 import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn, signOut } from "next-auth/react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Send, AlertCircle, Loader2, ChevronDown } from "lucide-react";
+import { Send, AlertCircle, Loader2, ChevronDown, ShieldCheck, ShieldOff } from "lucide-react";
+import { FcGoogle } from "react-icons/fc";
 import type { Resolver } from "react-hook-form";
 import { GradientButton } from "@/components/ui/GradientButton";
 import { StarRating } from "@/components/recommend/StarRating";
@@ -20,6 +22,16 @@ type State = {
   message?: string;
   errors?: Record<string, string[]>;
 };
+
+type GoogleUser = {
+  name: string;
+  email: string;
+  image: string | null;
+};
+
+interface RecommendFormProps {
+  googleUser: GoogleUser | null;
+}
 
 const initialState: State = { status: "idle" };
 
@@ -116,14 +128,15 @@ function Field({
   );
 }
 
-export function RecommendForm() {
+export function RecommendForm({ googleUser }: RecommendFormProps) {
   const router = useRouter();
   const [state, formAction, pending] = useActionState(
     async (prev: State, formData: FormData) => submitRecommendation(prev, formData),
     initialState
   );
 
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(5);
+  const [signingIn, setSigningIn] = useState(false);
 
   const {
     register,
@@ -132,7 +145,7 @@ export function RecommendForm() {
   } = useForm<RecommendationFormData>({
     resolver: zodResolver(recommendationSchema) as Resolver<RecommendationFormData>,
     mode: "onBlur",
-    defaultValues: { rating: 0 },
+    defaultValues: { rating: 5, name: googleUser?.name ?? "" },
   });
 
   useEffect(() => {
@@ -160,6 +173,85 @@ export function RecommendForm() {
         autoComplete="off"
       />
 
+      {/* Hidden field — server action reads this to set googleVerified */}
+      <input type="hidden" name="googleVerified" value={googleUser ? "true" : "false"} />
+
+      {/* Google verification banner */}
+      {googleUser ? (
+        <div
+          className="flex items-center justify-between gap-3 rounded-xl px-4 py-3"
+          style={{
+            backgroundColor: "color-mix(in oklab, var(--color-primary-container) 8%, transparent)",
+            border: "1px solid color-mix(in oklab, var(--color-primary-container) 20%, transparent)",
+          }}
+        >
+          <div className="flex items-center gap-2.5 min-w-0">
+            {googleUser.image ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={googleUser.image}
+                alt={googleUser.name}
+                className="w-7 h-7 rounded-full shrink-0"
+              />
+            ) : (
+              <ShieldCheck size={16} style={{ color: "var(--color-primary-container)" }} className="shrink-0" />
+            )}
+            <div className="min-w-0">
+              <p className="text-xs font-semibold leading-snug" style={{ color: "var(--color-primary-container)" }}>
+                Verified via Google
+              </p>
+              <p className="text-[11px] truncate" style={{ color: "var(--color-outline)" }}>
+                {googleUser.email}
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => signOut({ redirectTo: "/recommend" })}
+            className="shrink-0 text-[11px] font-medium transition-opacity hover:opacity-70"
+            style={{ color: "var(--color-outline)" }}
+          >
+            Sign out
+          </button>
+        </div>
+      ) : (
+        <div
+          className="rounded-xl px-4 py-4"
+          style={{
+            backgroundColor: "color-mix(in oklab, var(--color-outline-variant) 8%, transparent)",
+            border: "1px solid color-mix(in oklab, var(--color-outline-variant) 20%, transparent)",
+          }}
+        >
+          <div className="flex items-start gap-3">
+            <ShieldOff size={16} className="shrink-0 mt-0.5" style={{ color: "var(--color-outline)" }} />
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-semibold mb-0.5" style={{ color: "var(--color-on-surface)" }}>
+                Want a Verified badge on your review?
+              </p>
+              <p className="text-[11px] leading-relaxed mb-3" style={{ color: "var(--color-outline)" }}>
+                Sign in with Google to show a Verified badge alongside your recommendation.
+              </p>
+              <button
+                type="button"
+                disabled={signingIn}
+                onClick={async () => {
+                  setSigningIn(true);
+                  await signIn("google", { redirectTo: "/recommend" });
+                }}
+                className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium transition-all duration-200 ghost-border cursor-pointer bg-surface-high text-on-surface hover:bg-[#4285F4] hover:border-[#4285F4] hover:text-white"
+              >
+                {signingIn ? (
+                  <Loader2 size={13} className="animate-spin" />
+                ) : (
+                  <FcGoogle size={14} />
+                )}
+                Sign in with Google
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Field
         label="Your full name"
         id="name"
@@ -167,6 +259,7 @@ export function RecommendForm() {
         required
         placeholder="e.g. John Doe"
         autoComplete="name"
+        defaultValue={googleUser?.name ?? ""}
         error={errors.name?.message ?? state.errors?.name?.[0]}
         {...register("name")}
       />
@@ -243,7 +336,12 @@ export function RecommendForm() {
       />
 
       <div className="space-y-2">
-        <FieldLabel htmlFor="rating" label="Rating" required />
+        <p
+          className="font-mono text-[10px] tracking-[0.15em] uppercase"
+          style={{ color: "var(--color-on-surface-variant)" }}
+        >
+          Rating <span style={{ color: "var(--color-primary-container)" }}>*</span>
+        </p>
         <Controller
           control={control}
           name="rating"

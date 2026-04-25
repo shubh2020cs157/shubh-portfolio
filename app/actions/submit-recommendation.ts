@@ -3,6 +3,7 @@
 import { randomUUID } from "crypto";
 import { headers } from "next/headers";
 import { Resend } from "resend";
+import { auth } from "@/auth";
 import { recommendationSchema } from "@/lib/schemas/recommendation";
 import { redis, KEYS, isRedisConfigured } from "@/lib/redis";
 
@@ -41,6 +42,10 @@ export async function submitRecommendation(
       errors: parsed.error.flatten().fieldErrors as Record<string, string[]>,
     };
   }
+
+  // Verify Google session server-side — don't trust the hidden field alone
+  const session = await auth();
+  const googleVerified = !!session?.user?.email;
 
   if (!isRedisConfigured()) {
     console.error("[submit-recommendation] Upstash Redis is not configured.");
@@ -84,6 +89,7 @@ export async function submitRecommendation(
     rating: String(rating),
     status: "pending",
     createdAt: String(createdAt),
+    googleVerified: googleVerified ? "true" : "false",
   });
   await r.zadd(KEYS.pending, { score: createdAt, member: id });
 
