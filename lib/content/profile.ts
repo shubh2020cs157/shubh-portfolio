@@ -1,8 +1,8 @@
 export const profile = {
   name: "Shubh Kamal Sharma",
   initials: "SKS",
-  tagline: "Full-Stack SDE & Generative AI Engineer",
-  heroHeadline: "Full-Stack & Agentic AI Engineer",
+  tagline: "Full-Stack SDE & AI Builder",
+  heroHeadline: "Full-Stack SDE & AI Builder",
   heroSubtitle:
     "Full-stack engineer who takes products from design to deployment — distributed backends, multi-agent AI pipelines, and cloud-native infrastructure built to run reliably in production.",
   about:

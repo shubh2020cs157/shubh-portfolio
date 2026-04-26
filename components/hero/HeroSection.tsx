@@ -97,7 +97,7 @@ export function HeroSection() {
             animationDelay: "60ms",
           }}
         >
-          Full-Stack SDE &amp; GenAI Engineer
+          Full-Stack SDE &amp; AI Builder
         </p>
 
         {/* Main heading */}

@@ -4,7 +4,7 @@ import { GradientButton } from "@/components/ui/GradientButton";
 import { profile } from "@/lib/content/profile";
 
 const badges = [
-  "Full-Stack + GenAI Expert",
+  "Full-Stack + Gen AI/Agentic AI",
   "React · FastAPI · K8s",
   "Microsoft Contract SDE",
   "Production-proven systems",
@@ -64,7 +64,8 @@ export function SiteFooter() {
             className="text-base sm:text-lg leading-relaxed mb-8 max-w-2xl mx-auto"
             style={{ color: "var(--color-on-surface-variant)" }}
           >
-            I build fast, ship clean, and own the outcome — from React frontends to agentic AI pipelines to cloud-native infra.
+            I build fast, ship clean, and own the outcome — from React frontends
+            to agentic AI pipelines to cloud-native infra.
           </p>
 
           {/* Badge pills */}
@@ -74,8 +75,10 @@ export function SiteFooter() {
                 key={badge}
                 className="px-3 py-1.5 rounded-full text-xs font-medium"
                 style={{
-                  backgroundColor: "color-mix(in oklab, var(--color-primary-container) 8%, var(--color-surface-high))",
-                  border: "1px solid color-mix(in oklab, var(--color-primary-container) 20%, transparent)",
+                  backgroundColor:
+                    "color-mix(in oklab, var(--color-primary-container) 8%, var(--color-surface-high))",
+                  border:
+                    "1px solid color-mix(in oklab, var(--color-primary-container) 20%, transparent)",
                   color: "var(--color-primary)",
                 }}
               >
@@ -85,10 +88,7 @@ export function SiteFooter() {
           </div>
 
           {/* CTA */}
-          <GradientButton
-            href={`mailto:${profile.email}`}
-            size="lg"
-          >
+          <GradientButton href={`mailto:${profile.email}`} size="lg">
             Hire Me <ArrowRight size={16} />
           </GradientButton>
         </div>
@@ -99,16 +99,21 @@ export function SiteFooter() {
         className="py-5 px-6"
         style={{
           backgroundColor: "var(--color-surface-lowest)",
-          borderTop: "1px solid color-mix(in oklab, var(--color-outline-variant) 20%, transparent)",
+          borderTop:
+            "1px solid color-mix(in oklab, var(--color-outline-variant) 20%, transparent)",
         }}
       >
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           {/* Logo */}
           <p
             className="font-bold text-base"
-            style={{ fontFamily: "var(--font-display)", color: "var(--color-on-surface)" }}
+            style={{
+              fontFamily: "var(--font-display)",
+              color: "var(--color-on-surface)",
+            }}
           >
-            Shubh<span style={{ color: "var(--color-primary-container)" }}>.</span>
+            Shubh
+            <span style={{ color: "var(--color-primary-container)" }}>.</span>
           </p>
 
           {/* Copyright + views */}
@@ -119,8 +124,16 @@ export function SiteFooter() {
           {/* Social icons */}
           <div className="flex items-center gap-3">
             {[
-              { href: profile.socials.github, Icon: GithubIcon, label: "GitHub" },
-              { href: profile.socials.linkedin, Icon: LinkedinIcon, label: "LinkedIn" },
+              {
+                href: profile.socials.github,
+                Icon: GithubIcon,
+                label: "GitHub",
+              },
+              {
+                href: profile.socials.linkedin,
+                Icon: LinkedinIcon,
+                label: "LinkedIn",
+              },
               { href: `mailto:${profile.email}`, Icon: Mail, label: "Email" },
             ].map(({ href, Icon, label }) => (
               <a
