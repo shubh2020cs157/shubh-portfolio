@@ -8,7 +8,7 @@ import { SkillsSection } from "@/components/skills/SkillsSection";
 import { ReviewsSection } from "@/components/reviews/ReviewsSection";
 import { ContactSection } from "@/components/contact/ContactSection";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default function Home() {
   return (
