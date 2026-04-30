@@ -71,7 +71,7 @@ export const experience: ExperienceEntry[] = [
     company: "ModelX AI",
     type: "Freelance",
     location: "Remote (US-based startup)",
-    startDate: "Sep 2024",
+    startDate: "Apr 2024",
     endDate: "Nov 2024",
     isCurrent: false,
     highlights: [

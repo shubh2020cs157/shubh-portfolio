@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Shubh Kamal Sharma — Full-Stack & GenAI Engineer";
+export const alt = "Shubh Kamal Sharma — Full-Stack SDE & AI Builder";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -99,7 +99,7 @@ export default function OGImage() {
             marginBottom: 40,
           }}
         >
-          Full-Stack SDE & Generative AI Engineer
+          Full-Stack SDE & AI Builder
         </div>
 
         {/* Tags row */}

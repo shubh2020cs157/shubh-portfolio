@@ -31,15 +31,15 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_BASE_URL ?? "https://shubhkamalsharma.vercel.app"
   ),
   title: {
-    default: "Shubh Kamal Sharma — Full-Stack & GenAI Engineer",
+    default: "Shubh Kamal Sharma — Full-Stack SDE & AI Builder",
     template: "%s | Shubh Kamal Sharma",
   },
   description:
-    "Full-Stack SDE & Generative AI engineer with 1.5+ years of experience. Building production-grade systems with FastAPI, Next.js, Kafka, LangChain, and cloud-native infra on AWS & Azure.",
+    "Full-Stack SDE & AI Builder with 2+ years of experience at Microsoft, Prodevans & ModelX AI. Building production-grade systems with FastAPI, Next.js, Kafka, LangChain, and cloud-native infra on AWS & Azure.",
   keywords: [
     "Shubh Kamal Sharma",
     "Full Stack Developer",
-    "GenAI Engineer",
+    "AI Builder",
     "Next.js",
     "FastAPI",
     "LangChain",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    title: "Shubh Kamal Sharma — Full-Stack & GenAI Engineer",
+    title: "Shubh Kamal Sharma — Full-Stack SDE & AI Builder",
     description:
       "Full-Stack SDE & Generative AI engineer. Building event-driven backends, agentic AI pipelines, and cloud-native systems.",
     siteName: "Shubh Kamal Sharma",
@@ -62,13 +62,13 @@ export const metadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "Shubh Kamal Sharma — Full-Stack & GenAI Engineer",
+        alt: "Shubh Kamal Sharma — Full-Stack SDE & AI Builder",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Shubh Kamal Sharma — Full-Stack & GenAI Engineer",
+    title: "Shubh Kamal Sharma — Full-Stack SDE & AI Builder",
     description:
       "Full-Stack SDE & Generative AI engineer. Building event-driven backends, agentic AI pipelines, and cloud-native systems.",
     images: ["/opengraph-image"],

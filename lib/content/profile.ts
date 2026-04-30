@@ -6,7 +6,7 @@ export const profile = {
   heroSubtitle:
     "Full-stack engineer who takes products from design to deployment — distributed backends, multi-agent AI pipelines, and cloud-native infrastructure built to run reliably in production.",
   about:
-    "Product-focused engineer with 1.5+ years at Microsoft and Prodevans Technologies, shipping end-to-end systems across distributed backends, GenAI pipelines, and cloud-native infrastructure.",
+    "Product-focused engineer with 2+ years at Microsoft, Prodevans Technologies & ModelX AI, shipping end-to-end systems across distributed backends, AI pipelines, and cloud-native infrastructure.",
   aboutBio: [
     "I started as a developer obsessed with how large systems stay reliable under pressure — that curiosity led me from building Spring Boot REST APIs and React UIs to designing event-driven Kafka pipelines and multi-agent AI workflows with LangChain and CrewAI.",
     "At Prodevans Technologies I architected data pipelines using Kafka and InfluxDB, improved system latency with Redis caching strategies, and automated CI/CD with Jenkins and Kubernetes. At Microsoft I build and integrate Azure-native microservices, work on API gateway and Functions-based services, and drive observability efforts across distributed systems.",
