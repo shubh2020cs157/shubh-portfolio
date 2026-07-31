@@ -77,6 +77,8 @@ export default function OGImage() {
         {/* Name */}
         <div
           style={{
+            display: "flex",
+            flexDirection: "column",
             fontSize: 72,
             fontWeight: 700,
             lineHeight: 0.9,
@@ -86,8 +88,7 @@ export default function OGImage() {
             textShadow: "0 0 40px rgba(0,229,255,0.25)",
           }}
         >
-          SHUBH KAMAL
-          <br />
+          <span>SHUBH KAMAL</span>
           <span style={{ color: "#00e5ff" }}>SHARMA</span>
         </div>
 
