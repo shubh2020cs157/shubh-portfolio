@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { SiteNavbar } from "@/components/layout/SiteNavbar";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { HeroSection } from "@/components/hero/HeroSection";
@@ -7,8 +8,6 @@ import { JourneySection } from "@/components/journey/JourneySection";
 import { SkillsSection } from "@/components/skills/SkillsSection";
 import { ReviewsSection } from "@/components/reviews/ReviewsSection";
 import { ContactSection } from "@/components/contact/ContactSection";
-
-export const dynamic = "force-dynamic";
 
 export default function Home() {
   return (
@@ -20,7 +19,9 @@ export default function Home() {
         <ProjectsSection />
         <JourneySection />
         <SkillsSection />
-        <ReviewsSection />
+        <Suspense fallback={null}>
+          <ReviewsSection />
+        </Suspense>
         <ContactSection />
       </main>
       <SiteFooter />
