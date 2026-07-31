@@ -19,8 +19,8 @@ export const experience: ExperienceEntry[] = [
     type: "Contract",
     location: "Bengaluru, India",
     startDate: "Oct 2025",
-    endDate: "Present",
-    isCurrent: true,
+    endDate: "Jun 2026",
+    isCurrent: false,
     highlights: [
       "Develop and integrate backend microservices using Azure API Gateway, Azure Functions, and enterprise REST APIs within an agile engineering team.",
       "Build and ship automation scripts and CI/CD pipelines (GitHub Actions, Docker) following production best practices: structured logging, zero-downtime deployment.",
